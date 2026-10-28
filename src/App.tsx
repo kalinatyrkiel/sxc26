@@ -886,9 +886,7 @@ function App() {
           }}
         >
           <header className="slide-header">
-            <span className="slide-header-brand">SXC2026</span>
-            <span className="slide-header-meta">Designing around AI</span>
-            <span className="slide-header-meta">12 Nov · Palmsalen</span>
+            <span className="slide-header-brand">SXC 2026</span>
           </header>
           <div className="slide-content">{content}</div>
           <footer className="slide-footer">
