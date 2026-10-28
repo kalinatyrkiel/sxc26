@@ -1,0 +1,56 @@
+:root {
+  /* SXC 2026 */
+  --navy: #000a1e;
+  --navy-raised: #08142e;
+  --navy-line: #1c2a47;
+  --yellow: #fefa00;
+  --mint: #00ffc8;
+  --pink: #ff81cd;
+  --off-white: #f1f1f1;
+  --muted: #a9b3c7;
+  --faint: #6f7c96;
+
+  --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, monospace;
+  --font-hand: 'Gochi Hand', 'Comic Sans MS', cursive;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--navy);
+}
+
+body {
+  font-family: var(--font-mono);
+  color: var(--off-white);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p,
+blockquote,
+figure,
+ol,
+ul {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--mint);
+  outline-offset: 3px;
+}
