@@ -4,7 +4,6 @@ import sxcLogo from './assets/sxc/sxc-logo.png'
 import kalinaPhoto from './assets/sxc/kalina-sxc.png'
 import arrowDown from './assets/doodles/arrow-down.svg'
 import arrowDown2 from './assets/doodles/arrow-down-2.svg'
-import arrowLeftYellow from './assets/doodles/arrow-left-yellow.svg'
 import chipDoodle from './assets/doodles/chip.svg'
 import heartDoodle from './assets/doodles/heart.svg'
 import starDoodle from './assets/doodles/star.svg'
@@ -255,9 +254,6 @@ const slides: Slide[] = [
         <figure className="hero-photo">
           <img src={kalinaPhoto} alt="Kalina Tyrkiel-Szymańska" />
         </figure>
-        <Note className="hero-note" arrow={arrowLeftYellow}>
-          trust me, I’m a psychologist
-        </Note>
       </div>
     ),
   },

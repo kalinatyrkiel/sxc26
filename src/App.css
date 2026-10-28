@@ -396,18 +396,6 @@
   display: block;
 }
 
-.hero-note {
-  left: 980px;
-  bottom: -70px;
-  transform: rotate(-6deg);
-  flex-direction: row-reverse;
-}
-
-.hero-note .note-arrow {
-  width: 120px;
-  transform: rotate(-10deg) translateY(10px);
-}
-
 /* ---------- Intro ---------- */
 
 .intro {
