@@ -1,14 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import sxcLogo from './assets/sxc/sxc-logo.png'
-import kalinaPhoto from './assets/sxc/kalina-sxc.png'
 import arrowDown from './assets/doodles/arrow-down.svg'
 import arrowDown2 from './assets/doodles/arrow-down-2.svg'
-import chipDoodle from './assets/doodles/chip.svg'
-import heartDoodle from './assets/doodles/heart.svg'
+import speechBubbleDoodle from './assets/doodles/speech-bubble.svg'
 import starDoodle from './assets/doodles/star.svg'
 import squiggleDoodle from './assets/doodles/squiggle.svg'
-import tvDoodle from './assets/doodles/tv.svg'
 import handDoodle from './assets/doodles/hand.svg'
 import thesisChatbot from './assets/thesis-chatbot.png'
 import thenLoom404 from './assets/then-loom-404.png'
@@ -16,7 +13,7 @@ import thenAnalyticsEmpty from './assets/then-analytics-empty.png'
 import nowAskAboutCode from './assets/now-ask-about-code.png'
 import nowBloombergTakeaways from './assets/now-bloomberg-takeaways.png'
 import chatgptDisclaimer from './assets/example-visibility-disclaimer.png'
-import chatgptSystemState from './assets/example-visibility-system-state.png'
+import chatgptStockholmKrakow from './assets/example-visibility-stockholm-krakow.png'
 import zendeskWhySuggestion from './assets/zendesk-why-suggestion.png'
 import blankBox from './assets/blank-box-anxiety.png'
 import zendeskAiPrompts from './assets/zendesk-ai-prompts.png'
@@ -26,6 +23,7 @@ import controlFeedback from './assets/example-control-feedback.png'
 import controlModelPicker from './assets/example-control-model-picker.png'
 import zendeskAutoAssist from './assets/zendesk-auto-assist.png'
 import linkedinQr from './assets/linkedin-qr.jpg'
+import balticSunrise from './assets/baltic-sunrise.jpg'
 import './App.css'
 
 const STAGE_WIDTH = 1920
@@ -36,16 +34,19 @@ function Shot({
   alt,
   caption,
   className,
+  annotation,
 }: {
   src: string
   alt: string
   caption?: string
   className?: string
+  annotation?: ReactNode
 }) {
   return (
     <figure className={`shot${className ? ` ${className}` : ''}`}>
       <div className="shot-frame">
         <img src={src} alt={alt} />
+        {annotation}
       </div>
       {caption && <figcaption>{caption}</figcaption>}
     </figure>
@@ -66,6 +67,23 @@ function Note({
       <span>{children}</span>
       {arrow && <img className="note-arrow" src={arrow} alt="" />}
     </p>
+  )
+}
+
+function CartoonCallout({
+  kicker,
+  children,
+  className,
+}: {
+  kicker?: ReactNode
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <div className={`cartoon-callout${className ? ` ${className}` : ''}`}>
+      {kicker && <p className="cartoon-callout-kicker">{kicker}</p>}
+      <div className="cartoon-callout-body">{children}</div>
+    </div>
   )
 }
 
@@ -228,6 +246,149 @@ function SystemPromptMock({ showSuggestion }: { showSuggestion: boolean }) {
   )
 }
 
+function BalticFlag({ code, x, y }: { code: 'se' | 'pl'; x: number; y: number }) {
+  if (code === 'se') {
+    return (
+      <g className="baltic-schematic-flag" transform={`translate(${x}, ${y})`}>
+        <rect width="32" height="20" fill="#006aa7" stroke="#f1f1f1" strokeWidth="1" />
+        <rect x="11" width="4" height="20" fill="#fecc00" />
+        <rect y="8" width="32" height="4" fill="#fecc00" />
+      </g>
+    )
+  }
+  return (
+    <g className="baltic-schematic-flag" transform={`translate(${x}, ${y})`}>
+      <rect width="32" height="10" fill="#f1f1f1" stroke="#f1f1f1" strokeWidth="1" />
+      <rect y="10" width="32" height="10" fill="#dc143c" />
+    </g>
+  )
+}
+
+function BalticPlaceLabel({
+  code,
+  x,
+  y,
+  label,
+}: {
+  code: 'se' | 'pl'
+  x: number
+  y: number
+  label: string
+}) {
+  const tone = code === 'se' ? 'stockholm' : 'gdynia'
+  return (
+    <g className={`baltic-schematic-place is-${tone}`}>
+      <BalticFlag code={code} x={x} y={y - 18} />
+      <text className={`baltic-schematic-city is-${tone}`} x={x + 42} y={y}>
+        {label}
+      </text>
+    </g>
+  )
+}
+
+function BalticSchematicMap() {
+  /* Simple basin: straits SW, Poland S/E, Sweden N/W. */
+  const balticCoast =
+    'M 200 408 L 280 428 L 380 432 L 620 408 L 728 288 L 680 128 L 460 92 L 320 112 L 248 228 L 200 408 Z'
+
+  const stockholm = { x: 318, y: 118 }
+  /* ~same longitude as Stockholm, mostly south (not far east). */
+  const gdynia = { x: 358, y: 408 }
+  const gotland = { x: 395, y: 268 }
+
+  return (
+    <svg
+      className="baltic-schematic-svg"
+      viewBox="0 0 800 520"
+      role="img"
+      aria-label="Schematic map of the Baltic Sea with Stockholm and Gdynia marked."
+    >
+      <rect className="baltic-schematic-bg" width="800" height="520" />
+      <path className="baltic-schematic-sea" d={balticCoast} />
+      <path
+        className="baltic-schematic-land"
+        fillRule="evenodd"
+        d={`M 0 0 H 800 V 520 H 0 Z ${balticCoast}`}
+      />
+      <ellipse
+        className="baltic-schematic-land is-island"
+        cx={gotland.x}
+        cy={gotland.y}
+        rx="36"
+        ry="20"
+      />
+      <text className="baltic-schematic-island-label" x={gotland.x} y={gotland.y + 5}>
+        Gotland
+      </text>
+      <text className="baltic-schematic-sea-label" x="535" y="258">
+        Baltic Sea
+      </text>
+      <path
+        className="baltic-schematic-route"
+        d={`M ${stockholm.x} ${stockholm.y} L ${gdynia.x} ${gdynia.y}`}
+      />
+      <g className="baltic-schematic-marker is-stockholm">
+        <circle className="baltic-schematic-marker-ring" cx={stockholm.x} cy={stockholm.y} r="16" />
+        <circle className="baltic-schematic-marker-dot" cx={stockholm.x} cy={stockholm.y} r="6" />
+      </g>
+      <BalticPlaceLabel code="se" x={352} y={102} label="Stockholm, Sweden" />
+      <g className="baltic-schematic-marker is-gdynia">
+        <circle className="baltic-schematic-marker-ring" cx={gdynia.x} cy={gdynia.y} r="18" />
+        <circle className="baltic-schematic-marker-dot" cx={gdynia.x} cy={gdynia.y} r="7" />
+      </g>
+      <BalticPlaceLabel code="pl" x={392} y={392} label="Gdynia, Poland" />
+    </svg>
+  )
+}
+
+function BalticMapSlide() {
+  return (
+    <div className="baltic-map-slide">
+      <figure className="baltic-map-figure">
+        <div className="shot-frame baltic-schematic-frame">
+          <BalticSchematicMap />
+        </div>
+      </figure>
+    </div>
+  )
+}
+
+function StoryChatSlide({ build }: { build: number }) {
+  return (
+    <div className="story-chat">
+      <div className="story-chat-panel">
+        <div className="story-chat-row is-user">
+          <span className="story-chat-meta">Me</span>
+          <blockquote className="story-chat-quote">
+            “Will the clouds on the horizon clear in time for sunrise?”
+          </blockquote>
+        </div>
+        {build >= 1 && (
+          <div className="story-chat-row is-ai">
+            <span className="story-chat-meta">AI</span>
+            <div className="story-chat-reply">
+              <p>
+                Low clouds often linger near the coast at dawn. Check a local
+                forecast for the next hour—visibility can change quickly.
+              </p>
+              {build >= 2 && (
+                <p className="story-chat-hot">
+                  “I envy you getting to see that.”
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+        {build >= 3 && (
+          <Note className="story-chat-note">
+            LOL you don&apos;t envy anything, you&apos;re an LLM
+          </Note>
+        )}
+      </div>
+    </div>
+  )
+}
+
 type Slide = {
   className?: string
   builds?: number
@@ -243,7 +404,7 @@ const slides: Slide[] = [
         <div className="hero-copy">
           <img className="hero-logo" src={sxcLogo} alt="SXC, STHLM Xperience Conference 2026" />
           <h1 className="hero-title">
-            Designing around AI:
+            Designing around AI:{' '}
             <span className="hero-title-sub">the psychology of new design patterns</span>
           </h1>
           <div className="hero-speaker">
@@ -251,9 +412,6 @@ const slides: Slide[] = [
             <p className="hero-role">Senior Content Designer @ Zendesk</p>
           </div>
         </div>
-        <figure className="hero-photo">
-          <img src={kalinaPhoto} alt="Kalina Tyrkiel-Szymańska" />
-        </figure>
       </div>
     ),
   },
@@ -264,15 +422,13 @@ const slides: Slide[] = [
         <div className="intro-copy">
           <h2 className="title">Hi, I’m Kalina</h2>
           <p className="role">
-            UX writer by trade.
-            <br />
-            Psychologist by training.
+            UX writer by trade, psychologist by training
           </p>
           <ul className="intro-list">
             <li>
-              Senior Content Designer working on AI experiences at{' '}
-              <strong>Zendesk</strong>: an AI-first company, one of OpenAI’s top
-              30 customers
+              Senior Content Designer working on
+              <br />
+              AI experiences at <strong>Zendesk</strong>
             </li>
             <li>Trainer, lecturer, and creator of Poland’s first AI in UX writing course</li>
           </ul>
@@ -291,8 +447,23 @@ const slides: Slide[] = [
     ),
   },
   {
+    className: 'audience-slide',
+    content: (
+      <div className="audience-ask">
+        <p className="audience-ask-prompt">
+          Anyone worked with a{' '}
+          <span className="audience-ask-role">
+            <span className="hl-yellow">UX writer</span>
+            <span className="audience-ask-role-sub">(content designer)</span>
+          </span>{' '}
+          before?
+        </p>
+      </div>
+    ),
+  },
+  {
     className: 'era-slide',
-    credit: 'examples: Loom, Spotify for Creators',
+    credit: 'Examples: Loom, Spotify for Creators',
     content: (
       <div className="era">
         <div className="era-copy">
@@ -318,7 +489,7 @@ const slides: Slide[] = [
   },
   {
     className: 'era-slide',
-    credit: 'examples: Cursor, Bloomberg',
+    credit: 'Examples: Cursor, Bloomberg',
     content: (
       <div className="era">
         <div className="era-copy">
@@ -352,8 +523,18 @@ const slides: Slide[] = [
           <br />
           out of the <span className="hl-pink">large language model</span>
         </h2>
-        <p className="lede">Every new AI pattern is, at its core, a language decision.</p>
-        <Doodle src={chipDoodle} className="statement-chip" />
+      </div>
+    ),
+  },
+  {
+    className: 'statement-slide',
+    content: (
+      <div className="statement-wrap">
+        <h2 className="statement statement-md">
+          Every new LLM pattern is, at its core, a{' '}
+          <span className="hl-yellow">language decision</span>.
+        </h2>
+        <Doodle src={speechBubbleDoodle} className="statement-speech" />
       </div>
     ),
   },
@@ -361,29 +542,22 @@ const slides: Slide[] = [
     className: 'agenda-slide',
     content: (
       <div className="agenda">
-        <h2 className="title">
-          4 new patterns <span className="hl-yellow">and the psychology behind them</span>
-        </h2>
         <ol className="agenda-grid">
           <li>
-            <span className="agenda-num">01</span>
-            <h3>Disclose AI outputs</h3>
-            <p>Trust calibration</p>
+            <span className="agenda-num">1</span>
+            <h3>Disclosure</h3>
           </li>
           <li>
-            <span className="agenda-num">02</span>
-            <h3>Manage expectations</h3>
-            <p>Mental models</p>
+            <span className="agenda-num">2</span>
+            <h3>Mental models</h3>
           </li>
           <li>
-            <span className="agenda-num">03</span>
-            <h3>Tune anthropomorphism</h3>
-            <p>Personification</p>
+            <span className="agenda-num">3</span>
+            <h3>Anthropomorphism</h3>
           </li>
           <li>
-            <span className="agenda-num">04</span>
-            <h3>Design around bias</h3>
-            <p>Automation bias</p>
+            <span className="agenda-num">4</span>
+            <h3>Biases</h3>
           </li>
         </ol>
       </div>
@@ -394,48 +568,63 @@ const slides: Slide[] = [
   {
     className: 'divider-slide',
     content: (
-      <Divider num="01" section="Disclose AI outputs">
+      <Divider num="1" section="Disclose AI outputs">
         Anything AI generates could be a <span className="hl-pink">hallucination</span>
       </Divider>
     ),
   },
   {
     className: 'disclose-slide',
-    credit: 'examples: ChatGPT, Bloomberg',
+    credit: 'Examples: ChatGPT, Bloomberg',
     content: (
       <div className="disclose">
         <div className="disclose-copy">
-          <h2 className="title">Label it. Admit it. Point to what to check.</h2>
-          <ol className="rules">
-            <li>
-              <strong>Label the source:</strong> “Summary by Bloomberg AI”
-            </li>
+          <ul className="rules rules--plain">
             <li>
               <strong>Admit it can be wrong:</strong> “ChatGPT can make mistakes.”
             </li>
             <li>
-              <strong>Say what to verify,</strong> right where the decision happens
+              <strong>Label the source:</strong> “Summary by Bloomberg AI”
             </li>
-          </ol>
-          <p className="psych">
-            <span className="label">Psychology</span>
-            Habituation: generic disclaimers fade into the background after a
-            few views. Specific ones keep working.
-          </p>
+          </ul>
         </div>
         <div className="disclose-shots">
-          <Shot src={chatgptDisclaimer} alt="ChatGPT can make mistakes. Workspace data isn't used to train models." className="shot-strip" />
-          <Shot src={nowBloombergTakeaways} alt="Bloomberg takeaways card labeled Summary by Bloomberg AI." className="shot-bloomberg" />
-          <Note className="disclose-note" arrow={arrowDown2}>
-            seen it 1000 times. still reading it?
-          </Note>
+          <Shot
+            src={chatgptDisclaimer}
+            alt="ChatGPT can make mistakes. Workspace data isn't used to train models."
+            className="shot-disclaimer"
+          />
+          <Shot
+            src={nowBloombergTakeaways}
+            alt="Bloomberg takeaways card labeled Summary by Bloomberg AI."
+            className="shot-bloomberg"
+          />
+        </div>
+      </div>
+    ),
+  },
+  {
+    className: 'statement-slide habituation-slide',
+    content: (
+      <div className="statement-wrap habituation-wrap">
+        <Doodle src={starDoodle} className="habituation-star" />
+        <Doodle src={squiggleDoodle} className="habituation-squiggle" />
+        <div className="habituation-panel">
+          <CartoonCallout kicker={<span className="cartoon-callout-scribble">Habituation</span>}>
+            <p>We get used to seeing the same disclaimers.</p>
+          </CartoonCallout>
+          <Cite
+            title="Empowering Calibrated (Dis-)Trust in Conversational Agents"
+            meta="Metzger et al. · CHI 2024"
+            finding="Information on limitations didn't affect trust."
+          />
         </div>
       </div>
     ),
   },
   {
     className: 'work-slide',
-    credit: 'examples: Zendesk, ChatGPT',
+    credit: 'Examples: Zendesk, ChatGPT',
     content: (
       <div className="work">
         <div className="work-copy">
@@ -452,9 +641,9 @@ const slides: Slide[] = [
             caption="Why this suggestion? · Zendesk"
           />
           <Shot
-            src={chatgptSystemState}
-            alt="ChatGPT showing Working for 29s, its plan, and Searching 16 websites with a list of domains."
-            caption="What I’m doing right now · ChatGPT"
+            src={chatgptStockholmKrakow}
+            alt="ChatGPT: Worked for 7s, web search for population stats, answer citing Stockholm Business Region and Kraków city data with a source link preview."
+            caption="Search, timing, and cited sources · ChatGPT"
           />
         </div>
       </div>
@@ -464,15 +653,24 @@ const slides: Slide[] = [
   /* 02 Expectations */
   {
     className: 'divider-slide',
-    credit: 'example: Notion',
+    credit: 'Example: Notion',
     content: (
       <div className="divider-with-shot">
-        <Divider
-          num="02"
-          section="Manage expectations"
-          lede="No mental model of what the system can do, plus blank page anxiety."
-        >
-          An empty box promises <span className="hl-yellow">everything</span>
+        <Divider num="2" section="Manage expectations">
+          An empty box promises <span className="hl-yellow">everything</span> – and nothing at all
+        </Divider>
+        <Shot src={blankBox} alt="An empty Notion AI input with the placeholder Ask Notion AI." className="shot-blank" />
+      </div>
+    ),
+  },
+  {
+    className: 'divider-slide',
+    credit: 'Example: Notion',
+    content: (
+      <div className="divider-with-shot">
+        <Divider num="2" section="Manage expectations">
+          No mental model of what the system can do{' '}
+          <span className="hl-yellow">+ blank page anxiety</span>
         </Divider>
         <Shot src={blankBox} alt="An empty Notion AI input with the placeholder Ask Notion AI." className="shot-blank" />
       </div>
@@ -480,7 +678,7 @@ const slides: Slide[] = [
   },
   {
     className: 'capabilities-slide',
-    credit: 'examples: Zendesk, Notion',
+    credit: 'Examples: Zendesk, Notion',
     content: (
       <div className="capabilities">
         <div className="capabilities-copy">
@@ -508,7 +706,7 @@ const slides: Slide[] = [
   },
   {
     className: 'control-slide',
-    credit: 'examples: Cursor, ChatGPT',
+    credit: 'Examples: Cursor, ChatGPT',
     content: (
       <div className="control">
         <h2 className="title">Keep people in control</h2>
@@ -537,7 +735,7 @@ const slides: Slide[] = [
   },
   {
     className: 'approve-slide',
-    credit: 'example: Zendesk',
+    credit: 'Example: Zendesk',
     content: (
       <div className="approve">
         <div className="approve-copy">
@@ -550,10 +748,20 @@ const slides: Slide[] = [
           </p>
         </div>
         <div className="approve-shot">
-          <Shot src={zendeskAutoAssist} alt="Zendesk Auto assist drafting a reply to a customer, with an Approve button." caption="Auto assist · Zendesk" />
-          <Note className="approve-note" arrow={arrowDown}>
-            the most important button
-          </Note>
+          <figure className="shot">
+            <div className="shot-frame">
+              <div className="approve-shot-media">
+                <img
+                  src={zendeskAutoAssist}
+                  alt="Zendesk Auto assist drafting a reply to a customer, with an Approve button."
+                />
+                <Note className="approve-note" arrow={arrowDown}>
+                  the most important button
+                </Note>
+              </div>
+            </div>
+            <figcaption>Auto assist · Zendesk</figcaption>
+          </figure>
         </div>
       </div>
     ),
@@ -563,19 +771,10 @@ const slides: Slide[] = [
   {
     className: 'divider-slide',
     content: (
-      <Divider
-        num="03"
-        section="Tune anthropomorphism"
-        lede="Tiny wording choices decide whether people see a tool or a someone."
-      >
-        The words we choose shape what people <span className="hl-pink">believe</span> the AI is
+      <Divider num="3" section="Don't make AI too human">
+        Tone and wording shape trust
       </Divider>
     ),
-  },
-  {
-    className: 'prompt-slide-wrap',
-    builds: 1,
-    content: (build) => <SystemPromptMock showSuggestion={build > 0} />,
   },
   {
     content: (
@@ -591,6 +790,35 @@ const slides: Slide[] = [
           />
         }
       />
+    ),
+  },
+  {
+    className: 'statement-slide',
+    content: (
+      <div className="statement-wrap">
+        <h2 className="statement statement-md">
+          <span className="hl-yellow">CASA</span> –{' '}
+          <span className="hl-yellow">C</span>omputers <span className="hl-yellow">A</span>re{' '}
+          <span className="hl-yellow">S</span>ocial <span className="hl-yellow">A</span>ctors
+        </h2>
+        <p className="lede">
+          People use <span className="hl-yellow">social rules</span> with computers — not only with
+          people.
+        </p>
+        <Cite title="The Media Equation" meta="Nass & Reeves · 1996" />
+      </div>
+    ),
+  },
+  {
+    className: 'statement-slide',
+    content: (
+      <div className="statement-wrap">
+        <h2 className="statement statement-md">
+          We treat computers like people (
+          <span className="hl-yellow">often without noticing</span>) — and we think it{' '}
+          <span className="hl-pink">doesn&apos;t apply to us</span>.
+        </h2>
+      </div>
     ),
   },
   {
@@ -614,6 +842,21 @@ const slides: Slide[] = [
     ),
   },
   {
+    className: 'statement-slide',
+    content: (
+      <div className="statement-wrap">
+        <h2 className="statement statement-md">
+          Saying <span className="hl-yellow">&quot;AI can be wrong&quot;</span> didn&apos;t change trust.{' '}
+          How <span className="hl-yellow">certain</span> the AI sounded did.
+        </h2>
+        <Cite
+          title="Empowering Calibrated (Dis-)Trust in Conversational Agents"
+          meta="Metzger et al. · CHI 2024"
+        />
+      </div>
+    ),
+  },
+  {
     className: 'dial-slide',
     content: (
       <div className="dial">
@@ -628,6 +871,9 @@ const slides: Slide[] = [
             <span className="dial-label">Helpful tool</span>
             <p className="dial-output">I couldn’t find that order. Try searching by order number.</p>
             <p className="dial-why">Plain, honest, actionable</p>
+            <Note className="dial-note" arrow={arrowDown2}>
+              aim here
+            </Note>
           </article>
           <article className="dial-stop">
             <span className="dial-label">Too human</span>
@@ -635,22 +881,60 @@ const slides: Slide[] = [
             <p className="dial-why">Fake feelings, inflated trust</p>
           </article>
         </div>
-        <Note className="dial-note" arrow={arrowDown2}>
-          aim here
-        </Note>
-        <p className="body dial-caption">
-          A functional “I” for actions is fine. Feelings, friendship, and teammate
-          framing are not.
+      </div>
+    ),
+  },
+  {
+    className: 'story-place-slide',
+    content: (
+      <div className="story-place">
+        <figure className="story-place-figure">
+          <div className="shot-frame story-place-frame">
+            <img
+              src={balticSunrise}
+              alt="Sunrise over the Baltic Sea with an silhouetted sculpture on the shore."
+            />
+          </div>
+        </figure>
+        <p className="story-place-prompt">
+          Anyone know <span className="hl-yellow">where this is</span>?
         </p>
       </div>
     ),
+  },
+  {
+    className: 'story-map-slide',
+    content: <BalticMapSlide />,
+  },
+  {
+    className: 'story-chat-slide',
+    builds: 3,
+    content: (build) => <StoryChatSlide build={build} />,
+  },
+  {
+    className: 'statement-slide',
+    content: (
+      <div className="statement-wrap">
+        <h2 className="statement statement-md">
+          A functional <span className="hl-mint">“I”</span> for actions is fine.
+        </h2>
+        <p className="lede">
+          Feelings, friendship, and teammate framing are not.
+        </p>
+      </div>
+    ),
+  },
+  {
+    className: 'prompt-slide-wrap',
+    builds: 1,
+    content: (build) => <SystemPromptMock showSuggestion={build > 0} />,
   },
 
   /* 04 Bias */
   {
     className: 'divider-slide',
     content: (
-      <Divider num="04" section="Design around bias">
+      <Divider num="4" section="Design around bias">
         When AI sounds sure, <span className="hl-yellow">we stop checking</span>
       </Divider>
     ),
@@ -678,41 +962,6 @@ const slides: Slide[] = [
         <h2 className="statement statement-md">
           AI is quietly <span className="hl-pink">breaking default trust</span> at work
         </h2>
-        <p className="lede">
-          We generate documents with AI. Documents that only AI reads.
-          <br />
-          Normalize saying: <strong>“I explored this with AI.”</strong>
-        </p>
-        <Cite title="AI Is Breaking This Thing We Call Trust" meta="Terrible Software · 2026" />
-        <Doodle src={tvDoodle} className="statement-tv" />
-      </div>
-    ),
-  },
-  {
-    className: 'centaur-slide',
-    content: (
-      <div className="centaur">
-        <div className="centaur-copy">
-          <p className="kicker">Cory Doctorow’s reverse centaur</p>
-          <h2 className="title">
-            The machine decides.
-            <br />
-            <span className="hl-pink">The human takes the blame.</span>
-          </h2>
-        </div>
-        <div className="centaur-cards">
-          <article className="centaur-card is-good">
-            <span className="label">Centaur</span>
-            <p>AI drafts the error messages. You decide which ones ship.</p>
-          </article>
-          <article className="centaur-card is-bad">
-            <span className="label">Reverse centaur</span>
-            <p>
-              Someone prompts without context and ships the copy. You keep fixing
-              what ships, and you own the fallout.
-            </p>
-          </article>
-        </div>
       </div>
     ),
   },
@@ -721,21 +970,22 @@ const slides: Slide[] = [
     content: (
       <div className="statement-wrap">
         <h2 className="statement statement-md">
-          Copy that seems clear to the model can still{' '}
-          <span className="hl-yellow">confuse your users</span>
+          We generate documents with AI.
+          <br />
+          Documents that only AI reads.
         </h2>
-        <div className="human-split">
-          <p>
-            <span className="label label-mint">AI can check</span>
-            Rules: terms, case, length, words to avoid
-          </p>
-          <p>
-            <span className="label label-pink">People judge</span>
-            Meaning: tone, empathy, clarity, fit
-          </p>
-        </div>
-        <p className="lede">Test with real users, in the real flow. You make the call.</p>
-        <Doodle src={heartDoodle} className="statement-heart" />
+      </div>
+    ),
+  },
+  {
+    className: 'statement-slide',
+    content: (
+      <div className="statement-wrap">
+        <h2 className="statement statement-md">
+          Normalize saying:
+          <br />
+          <span className="hl-yellow">“I explored this with AI.”</span>
+        </h2>
       </div>
     ),
   },
@@ -746,22 +996,22 @@ const slides: Slide[] = [
         <h2 className="title">Leave with this</h2>
         <div className="takeaways-grid">
           <article>
-            <span className="agenda-num">01</span>
+            <span className="agenda-num">1</span>
             <h3>Disclose</h3>
             <p>Label AI output. Show sources. Say what to verify.</p>
           </article>
           <article>
-            <span className="agenda-num">02</span>
+            <span className="agenda-num">2</span>
             <h3>Set expectations</h3>
             <p>Say what the AI can do. Keep people in control. Draft, don’t send.</p>
           </article>
           <article>
-            <span className="agenda-num">03</span>
+            <span className="agenda-num">3</span>
             <h3>Tool, not teammate</h3>
             <p>Skip pseudo-empathy and teammate framing. Write it into the prompt.</p>
           </article>
           <article>
-            <span className="agenda-num">04</span>
+            <span className="agenda-num">4</span>
             <h3>Design for doubt</h3>
             <p>Hedge confident answers. Keep humans accountable. Test with people.</p>
           </article>
@@ -775,7 +1025,7 @@ const slides: Slide[] = [
       <div className="closing">
         <div className="closing-copy">
           <h2 className="closing-title">
-            Tack!
+            Thank you!
             <span className="closing-sub">Design for doubt, and enjoy the ride.</span>
           </h2>
           <div className="closing-workshop">
@@ -904,7 +1154,7 @@ function App() {
                 ←
               </button>
               <span className="slide-count">
-                {String(current + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
+                {current + 1} / {slides.length}
               </span>
               <button
                 type="button"

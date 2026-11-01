@@ -12,6 +12,7 @@
 
   --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, monospace;
   --font-hand: 'Gochi Hand', 'Comic Sans MS', cursive;
+  --font-serif: Georgia, 'Times New Roman', Times, ui-serif, serif;
 }
 
 * {
