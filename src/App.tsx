@@ -614,7 +614,7 @@ const slides: Slide[] = [
             <p>We get used to seeing the same disclaimers.</p>
           </CartoonCallout>
           <Cite
-            title="Empowering Calibrated (Dis-)Trust in Conversational Agents"
+            title="Calibrated (Dis-)Trust in Conversational Agents"
             meta="Metzger et al. · CHI 2024"
             finding="Information on limitations didn't affect trust."
           />
@@ -996,24 +996,20 @@ const slides: Slide[] = [
         <h2 className="title">Leave with this</h2>
         <div className="takeaways-grid">
           <article>
-            <span className="agenda-num">1</span>
             <h3>Disclose</h3>
             <p>Label AI output. Show sources. Say what to verify.</p>
           </article>
           <article>
-            <span className="agenda-num">2</span>
             <h3>Set expectations</h3>
-            <p>Say what the AI can do. Keep people in control. Draft, don’t send.</p>
+            <p>Say what the AI can do. Keep people in control.</p>
           </article>
           <article>
-            <span className="agenda-num">3</span>
-            <h3>Tool, not teammate</h3>
-            <p>Skip pseudo-empathy and teammate framing. Write it into the prompt.</p>
+            <h3>Don&apos;t make it too human</h3>
+            <p>Plain, honest replies. No fake feelings.</p>
           </article>
           <article>
-            <span className="agenda-num">4</span>
             <h3>Design for doubt</h3>
-            <p>Hedge confident answers. Keep humans accountable. Test with people.</p>
+            <p>Keep humans accountable.</p>
           </article>
         </div>
       </div>

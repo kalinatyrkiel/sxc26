@@ -559,12 +559,18 @@
   color: var(--yellow);
 }
 
-.agenda-grid h3,
-.takeaways-grid h3 {
+.agenda-grid h3 {
   font-size: 36px;
   line-height: 1.15;
   font-weight: 800;
   color: var(--off-white);
+}
+
+.takeaways-grid h3 {
+  font-size: 36px;
+  line-height: 1.15;
+  font-weight: 800;
+  color: var(--yellow);
 }
 
 .agenda-grid p {
@@ -712,23 +718,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 520px;
-  padding: 0 80px;
+  padding: 40px 80px 72px;
 }
 
 .habituation-panel {
-  position: relative;
-  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  width: 100%;
   max-width: 980px;
 }
 
 .habituation-panel .cite {
-  margin-top: 72px;
-  gap: 12px;
+  gap: 8px;
+  padding-left: 0;
+  border-left: none;
+  max-width: 920px;
 }
 
 .habituation-panel .cite-finding {
-  margin-top: 16px;
+  margin-top: 8px;
+}
+
+.habituation-panel .cartoon-callout {
+  margin: 0 0 12px;
+  flex-shrink: 0;
 }
 
 .habituation-star {
@@ -1111,6 +1125,10 @@
 
 .statement-wrap .cite {
   margin-top: 40px;
+}
+
+.statement-wrap.habituation-wrap .habituation-panel .cite {
+  margin-top: 24px;
 }
 
 .cite-title {
