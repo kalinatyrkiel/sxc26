@@ -1041,16 +1041,35 @@ const slides: Slide[] = [
   },
 ]
 
-function useStageScale() {
+function useStageScale(enabled: boolean) {
   const [scale, setScale] = useState(1)
   useEffect(() => {
+    if (!enabled) return
     const fit = () =>
       setScale(Math.min(window.innerWidth / STAGE_WIDTH, window.innerHeight / STAGE_HEIGHT))
     fit()
     window.addEventListener('resize', fit)
     return () => window.removeEventListener('resize', fit)
-  }, [])
+  }, [enabled])
   return scale
+}
+
+function usePhoneMode() {
+  const [isPhone, setIsPhone] = useState(() => {
+    if (typeof window === 'undefined') return false
+    if (new URLSearchParams(window.location.search).get('phone') === '1') return true
+    return window.matchMedia('(max-width: 768px)').matches
+  })
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('phone') === '1') return
+    const mq = window.matchMedia('(max-width: 768px)')
+    const update = () => setIsPhone(mq.matches)
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+
+  return isPhone
 }
 
 function App() {
@@ -1060,7 +1079,8 @@ function App() {
   }, [])
   const [current, setCurrent] = useState(initialSlide)
   const [build, setBuild] = useState(0)
-  const scale = useStageScale()
+  const isPhone = usePhoneMode()
+  const scale = useStageScale(!isPhone)
   const slide = slides[current]
   const maxBuild = slide.builds ?? 0
   const content = typeof slide.content === 'function' ? slide.content(build) : slide.content
@@ -1115,14 +1135,26 @@ function App() {
   }, [advance, retreat, goTo])
 
   return (
-    <main className="deck">
+    <main className={`deck${isPhone ? ' is-phone' : ''}`}>
       <div
         className="stage"
-        style={{
-          width: STAGE_WIDTH,
-          height: STAGE_HEIGHT,
-          transform: `translate(-50%, -50%) scale(${scale})`,
-        }}
+        style={
+          isPhone
+            ? {
+                width: '100%',
+                minHeight: '100dvh',
+                height: 'auto',
+                transform: 'none',
+                top: 0,
+                left: 0,
+                position: 'relative',
+              }
+            : {
+                width: STAGE_WIDTH,
+                height: STAGE_HEIGHT,
+                transform: `translate(-50%, -50%) scale(${scale})`,
+              }
+        }
       >
         <section
           className={`slide ${slide.className ?? ''}`}
@@ -1133,6 +1165,7 @@ function App() {
         >
           <header className="slide-header">
             <span className="slide-header-brand">SXC 2026</span>
+            {isPhone && <span className="slide-header-phone">Phone preview</span>}
           </header>
           <div className="slide-content">{content}</div>
           <footer className="slide-footer">

@@ -1675,3 +1675,234 @@
     display: none;
   }
 }
+
+/* ---------- Phone preview (reviewers; also ?phone=1 on desktop) ---------- */
+
+.deck.is-phone {
+  position: fixed;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.deck.is-phone .slide {
+  height: auto;
+  min-height: 100dvh;
+  overflow: visible;
+  background-size: 120% auto;
+  background-position: center top;
+}
+
+.deck.is-phone .slide-content {
+  height: auto;
+  min-height: calc(100dvh - 48px - 88px);
+  padding: 20px 18px 96px;
+  justify-content: flex-start;
+}
+
+.deck.is-phone .slide-header {
+  height: 48px;
+  padding: 0 16px;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.deck.is-phone .slide-header-phone {
+  margin-left: auto;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--yellow);
+}
+
+.deck.is-phone .slide-footer {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0));
+  background: rgba(0, 10, 30, 0.94);
+  border-top: 1px solid var(--navy-line);
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.deck.is-phone .slide-footer-leading {
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.deck.is-phone .slide-nav button {
+  width: 44px;
+  height: 40px;
+}
+
+.deck.is-phone .doodle,
+.deck.is-phone .note {
+  display: none;
+}
+
+.deck.is-phone .statement,
+.deck.is-phone .divider .statement {
+  font-size: clamp(1.35rem, 5.5vw, 1.75rem) !important;
+  line-height: 1.25 !important;
+}
+
+.deck.is-phone .divider-kicker {
+  font-size: 14px;
+}
+
+.deck.is-phone .lede,
+.deck.is-phone .body,
+.deck.is-phone .disclose-rule,
+.deck.is-phone .rules li {
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.deck.is-phone .title {
+  font-size: clamp(1.25rem, 5vw, 1.5rem) !important;
+}
+
+.deck.is-phone .disclose,
+.deck.is-phone .work,
+.deck.is-phone .capabilities,
+.deck.is-phone .control,
+.deck.is-phone .approve,
+.deck.is-phone .prompt-slide,
+.deck.is-phone .dial,
+.deck.is-phone .intro,
+.deck.is-phone .era,
+.deck.is-phone .closing,
+.deck.is-phone .human-split,
+.deck.is-phone .divider-with-shot,
+.deck.is-phone .story-place,
+.deck.is-phone .story-map,
+.deck.is-phone .story-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.deck.is-phone .disclose,
+.deck.is-phone .work,
+.deck.is-phone .capabilities,
+.deck.is-phone .approve,
+.deck.is-phone .prompt-slide,
+.deck.is-phone .closing,
+.deck.is-phone .intro-slide .intro,
+.deck.is-phone .era-slide .era,
+.deck.is-phone .divider-with-shot {
+  display: grid;
+  grid-template-columns: 1fr !important;
+  gap: 20px;
+}
+
+.deck.is-phone .control-grid {
+  grid-template-columns: 1fr !important;
+}
+
+.deck.is-phone .dial-track {
+  grid-template-columns: 1fr !important;
+  gap: 16px;
+}
+
+.deck.is-phone .agenda-grid,
+.deck.is-phone .takeaways-grid {
+  grid-template-columns: 1fr !important;
+  margin-top: 16px;
+  gap: 16px;
+}
+
+.deck.is-phone .agenda-grid li,
+.deck.is-phone .takeaways-grid article {
+  padding: 20px 18px;
+}
+
+.deck.is-phone .agenda-grid h3,
+.deck.is-phone .takeaways-grid h3 {
+  font-size: 22px;
+}
+
+.deck.is-phone .takeaways-grid p,
+.deck.is-phone .agenda-grid p {
+  font-size: 16px;
+}
+
+.deck.is-phone .shot-disclaimer,
+.deck.is-phone .shot-bloomberg {
+  width: 100%;
+  max-width: none;
+}
+
+.deck.is-phone .shot-bloomberg {
+  align-self: stretch;
+}
+
+.deck.is-phone .habituation-wrap {
+  padding: 0;
+  min-height: 0;
+}
+
+.deck.is-phone .cartoon-callout {
+  transform: none;
+  padding: 24px 20px;
+  box-shadow: 6px 6px 0 var(--pink);
+}
+
+.deck.is-phone .cartoon-callout-scribble {
+  font-size: 2.75rem;
+}
+
+.deck.is-phone .cartoon-callout-body {
+  font-size: 18px;
+}
+
+.deck.is-phone .habituation-panel {
+  gap: 20px;
+}
+
+.deck.is-phone .statement-wrap.habituation-wrap .habituation-panel .cite {
+  margin-top: 0;
+}
+
+.deck.is-phone .cite-title {
+  font-size: 15px;
+}
+
+.deck.is-phone .cite-meta,
+.deck.is-phone .cite-finding {
+  font-size: 14px;
+}
+
+.deck.is-phone .pair {
+  grid-template-columns: 1fr !important;
+  gap: 16px;
+}
+
+.deck.is-phone .agent-output p {
+  font-size: 15px;
+}
+
+.deck.is-phone .hero-slide .hero-title {
+  font-size: clamp(1.75rem, 8vw, 2.25rem);
+}
+
+.deck.is-phone .hero-slide .hero-sub {
+  font-size: 16px;
+}
+
+.deck.is-phone .closing-title {
+  font-size: clamp(2rem, 10vw, 2.5rem);
+}
+
+.deck.is-phone .closing-qr img {
+  max-width: 160px;
+}
