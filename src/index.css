@@ -7,8 +7,10 @@
   --mint: #00ffc8;
   --pink: #ff81cd;
   --off-white: #f1f1f1;
-  --muted: #a9b3c7;
-  --faint: #6f7c96;
+  /* Secondary text: ~11:1 on --navy (WCAG AAA). */
+  --muted: #b8c4d9;
+  /* Footer / chrome only; never sole carrier of meaning. ~8.2:1 on --navy. */
+  --faint: #9aa8be;
 
   --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, monospace;
   --font-hand: 'Gochi Hand', 'Comic Sans MS', cursive;

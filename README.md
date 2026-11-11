@@ -13,6 +13,10 @@ npm run dev
 
 Navigate with arrow keys, space, or click. `F` toggles fullscreen.
 
+## Accessibility
+
+Projection deck (not a web app): typescale and `--muted` / `--faint` tokens are tuned for **WCAG 2.2 contrast (AA+)** on `--navy`. Body and cite findings are 34px+; captions and footer are 22px+. Secondary text uses `#b8c4d9` (~11:1 on navy). Screenshots carry the product UI evidence; spoken context covers what images alone cannot.
+
 ## Online
 
 https://kalinatyrkiel.github.io/sxc26/

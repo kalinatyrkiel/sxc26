@@ -223,7 +223,7 @@ function SystemPromptMock({ showSuggestion }: { showSuggestion: boolean }) {
             {'\n'}
             <span className={`prompt-line is-hot${showSuggestion ? ' is-on' : ''}`}>
               {showSuggestion
-                ? 'Acknowledge the problem once. Never claim feelings. Lead with the next step.'
+                ? 'Lead with the next step. Never claim feelings.'
                 : 'Be warm and empathetic.'}
             </span>
             {'\n'}
@@ -236,9 +236,7 @@ function SystemPromptMock({ showSuggestion }: { showSuggestion: boolean }) {
         >
           <span className="label">Content design</span>
           <p>
-            <strong>Empathy is a behavior, not a feeling.</strong> “Warm and
-            empathetic” invites pseudo-empathy. Describe what the agent should
-            do instead.
+            <strong>Empathy is grounded in concrete instructions.</strong>
           </p>
         </aside>
       </div>
@@ -687,7 +685,6 @@ const slides: Slide[] = [
             Short, specific, timely. Suggested actions teach people what the
             system is for, before they type a word.
           </p>
-          <Note className="capabilities-note">expand · simplify · rewrite. that’s the whole manual.</Note>
         </div>
         <div className="capabilities-shots">
           <Shot
