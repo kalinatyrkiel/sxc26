@@ -312,8 +312,8 @@ function BalticSchematicMap() {
         className="baltic-schematic-land is-island"
         cx={gotland.x}
         cy={gotland.y}
-        rx="36"
-        ry="20"
+        rx="48"
+        ry="28"
       />
       <text className="baltic-schematic-island-label" x={gotland.x} y={gotland.y + 5}>
         Gotland
@@ -774,22 +774,6 @@ const slides: Slide[] = [
     ),
   },
   {
-    content: (
-      <AvoidInstead
-        title="Emotional language"
-        avoid="I’m so sorry you’re dealing with this. I completely understand how frustrating that must feel."
-        instead="I couldn’t find that order. Check the confirmation email, or search by order number."
-        cite={
-          <Cite
-            title="Mirages. On Anthropomorphism in Dialogue Systems"
-            meta="Abercrombie, Cercas Curry, Dinkar, Rieser, Talat · EMNLP 2023"
-            finding="Pseudo-empathy and emotion language push personification and over-reliance, especially in high-risk contexts."
-          />
-        }
-      />
-    ),
-  },
-  {
     className: 'statement-slide',
     content: (
       <div className="statement-wrap">
@@ -816,6 +800,22 @@ const slides: Slide[] = [
           <span className="hl-pink">doesn&apos;t apply to us</span>.
         </h2>
       </div>
+    ),
+  },
+  {
+    content: (
+      <AvoidInstead
+        title="Emotional language"
+        avoid="I’m so sorry you’re dealing with this. I completely understand how frustrating that must feel."
+        instead="I couldn’t find that order. Check the confirmation email, or search by order number."
+        cite={
+          <Cite
+            title="Mirages. On Anthropomorphism in Dialogue Systems"
+            meta="Abercrombie, Cercas Curry, Dinkar, Rieser, Talat · EMNLP 2023"
+            finding="Pseudo-empathy and emotion language push personification and over-reliance, especially in high-risk contexts."
+          />
+        }
+      />
     ),
   },
   {
